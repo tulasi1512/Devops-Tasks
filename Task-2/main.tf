@@ -138,14 +138,13 @@ resource "aws_instance" "ec2_a" {
   subnet_id              = aws_subnet.subnet_a.id
   vpc_security_group_ids = [aws_security_group.web_sg.id]
 
-  user_data = <<-EOF
-              #!/bin/bash
-              yum update -y
-              yum install -y httpd
-              systemctl start httpd
-              systemctl enable httpd
-              echo "<h1>Hello from EC2-SERVER-A</h1>" > /var/www/html/index.html
-              EOF
+user_data = <<-EOF
+               #!/bin/bash
+               apt update -y
+               apt install -y apache2
+               systemctl enable apache2
+               systemctl start apache2
+               ech
 
   tags = {
     Name = "EC2-SERVER-A"
@@ -165,13 +164,13 @@ resource "aws_instance" "ec2_b" {
   vpc_security_group_ids = [aws_security_group.web_sg.id]
 
   user_data = <<-EOF
-              #!/bin/bash
-              yum update -y
-              yum install -y httpd
-              systemctl start httpd
-              systemctl enable httpd
-              echo "<h1>Hello from EC2-SERVER-B</h1>" > /var/www/html/index.html
-              EOF
+               #!/bin/bash
+               apt update -y
+               apt install -y apache2
+               systemctl enable apache2
+               systemctl start apache2
+               echo "<h1>Hello from $(hostname)</h1>" > /var/www/html/index.html
+               EOF
 
   tags = {
     Name = "EC2-SERVER-B"
